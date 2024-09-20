@@ -10,6 +10,8 @@ btn.addEventListener("click", () => {
 		{ left: 1000 },
 		{
 			duration: 1000,
+			//가속도 설정
+			easeType: "ease1",
 			//상위 Anime구문이 끝나는 바로 그 순간 이어서 동기적(이전 작업이 모든 끝난 이후에)으로 새로운 모션을 이어서 실행
 			callback: () =>
 				new Anime(
