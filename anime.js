@@ -1,5 +1,5 @@
 class Anime {
-	#defOpt = { duration: 500, callback: null, easeType: 'linear' };
+	#defOpt = { duration: 500, callback: null, easeType: "linear" };
 
 	constructor(selector, props, opt) {
 		this.selector = selector;
@@ -12,39 +12,59 @@ class Anime {
 		this.startTime = performance.now();
 		this.isBg = null;
 		this.keys.forEach((key, idx) => {
-			typeof this.values[idx] === 'string'
-				? this.values[idx].includes('%')
-					? this.getValue(key, this.values[idx], 'percent')
-					: this.getValue(key, this.values[idx], 'color')
-				: this.getValue(key, this.values[idx], 'basic');
+			typeof this.values[idx] === "string"
+				? this.values[idx].includes("%")
+					? this.getValue(key, this.values[idx], "percent")
+					: this.getValue(key, this.values[idx], "color")
+				: this.getValue(key, this.values[idx], "basic");
 		});
 	}
 
 	getValue(key, value, type) {
 		let currentValue = null;
 		currentValue = parseFloat(getComputedStyle(this.selector)[key]);
-		key === 'scroll' ? (currentValue = this.selector.scrollY) : (currentValue = parseFloat(getComputedStyle(this.selector)[key]));
+		key === "scroll"
+			? (currentValue = this.selector.scrollY)
+			: (currentValue = parseFloat(getComputedStyle(this.selector)[key]));
 
-		if (type === 'percent') {
-			const parentW = parseInt(getComputedStyle(this.selector.parentElement).width);
-			const parentH = parseInt(getComputedStyle(this.selector.parentElement).height);
-			const x = ['left', 'right', 'width'];
-			const y = ['top', 'bottom', 'height'];
-			if (key.includes('margin') || key.includes('padding')) return console.error('margin, padding값은 퍼센트 모션처리할 수 없습니다.');
-			for (let cond of x) key === cond && (currentValue = (currentValue / parentW) * 100);
-			for (let cond of y) key === cond && (currentValue = (currentValue / parentH) * 100);
+		if (type === "percent") {
+			const parentW = parseInt(
+				getComputedStyle(this.selector.parentElement).width
+			);
+			const parentH = parseInt(
+				getComputedStyle(this.selector.parentElement).height
+			);
+			const x = ["left", "right", "width"];
+			const y = ["top", "bottom", "height"];
+			if (key.includes("margin") || key.includes("padding"))
+				return console.error(
+					"margin, padding값은 퍼센트 모션처리할 수 없습니다."
+				);
+			for (let cond of x)
+				key === cond && (currentValue = (currentValue / parentW) * 100);
+			for (let cond of y)
+				key === cond && (currentValue = (currentValue / parentH) * 100);
 			const percentValue = parseFloat(value);
-			percentValue !== currentValue && requestAnimationFrame((time) => this.run(time, key, currentValue, percentValue, type));
+			percentValue !== currentValue &&
+				requestAnimationFrame((time) =>
+					this.run(time, key, currentValue, percentValue, type)
+				);
 		}
-		if (type === 'color') {
+		if (type === "color") {
 			this.isBg = true;
 			currentValue = getComputedStyle(this.selector)[key];
 			currentValue = this.colorToArray(currentValue);
 			value = this.hexToRgb(value);
-			value !== currentValue && requestAnimationFrame((time) => this.run(time, key, currentValue, value, type));
+			value !== currentValue &&
+				requestAnimationFrame((time) =>
+					this.run(time, key, currentValue, value, type)
+				);
 		}
-		if (type === 'basic') {
-			value !== currentValue && requestAnimationFrame((time) => this.run(time, key, currentValue, value, type));
+		if (type === "basic") {
+			value !== currentValue &&
+				requestAnimationFrame((time) =>
+					this.run(time, key, currentValue, value, type)
+				);
 		}
 	}
 
@@ -53,7 +73,13 @@ class Anime {
 		this.setValue(key, result, type);
 
 		progress < 1
-			? ['percent', 'color', 'basic'].map((el) => type === el && requestAnimationFrame((time) => this.run(time, key, currentValue, value, type)))
+			? ["percent", "color", "basic"].map(
+					(el) =>
+						type === el &&
+						requestAnimationFrame((time) =>
+							this.run(time, key, currentValue, value, type)
+						)
+			  )
 			: this.callback && this.callback();
 	}
 
@@ -77,7 +103,11 @@ class Anime {
 		});
 		*/
 
-		Object.keys(easingPresets).map((key) => this.easeType === key && (easingProgress = BezierEasing(...easingPresets[key])(progress)));
+		Object.keys(easingPresets).map(
+			(key) =>
+				this.easeType === key &&
+				(easingProgress = BezierEasing(...easingPresets[key])(progress))
+		);
 
 		/*
 		if (this.isBg) {
@@ -95,15 +125,26 @@ class Anime {
 			: [progress, currentValue + (value - currentValue) * easingProgress];
 		*/
 
-		return [progress, this.isBg ? currentValue.map((curVal, idx) => curVal + (value[idx] - curVal) * easingProgress) : currentValue + (value - currentValue) * easingProgress];
+		return [
+			progress,
+			this.isBg
+				? currentValue.map(
+						(curVal, idx) =>
+							curVal + (value[idx] - curVal) * easingProgress
+				  )
+				: currentValue + (value - currentValue) * easingProgress,
+		];
 	}
 
 	setValue(key, result, type) {
-		if (type === 'percent') this.selector.style[key] = result + '%';
-		else if (type === 'color') this.selector.style[key] = `rgb(${result[0]},${result[1]},${result[2]})`;
-		else if (key === 'opacity') this.selector.style[key] = result;
-		else if (key === 'scroll') this.selector.scroll(0, result);
-		else this.selector.style[key] = result + 'px';
+		if (type === "percent") this.selector.style[key] = result + "%";
+		else if (type === "color")
+			this.selector.style[
+				key
+			] = `rgb(${result[0]},${result[1]},${result[2]})`;
+		else if (key === "opacity") this.selector.style[key] = result;
+		else if (key === "scroll") this.selector.scroll(0, result);
+		else this.selector.style[key] = result + "px";
 	}
 
 	colorToArray(strColor) {
@@ -111,8 +152,9 @@ class Anime {
 	}
 
 	hexToRgb(hexColor) {
-		const hex = hexColor.replace('#', '');
-		const rgb = hex.length === 3 ? hex.match(/a-f\d/gi) : hex.match(/[a-f\d]{2}/gi);
+		const hex = hexColor.replace("#", "");
+		const rgb =
+			hex.length === 3 ? hex.match(/a-f\d/gi) : hex.match(/[a-f\d]{2}/gi);
 
 		return rgb.map((el) => {
 			if (el.length === 1) el = el + el;

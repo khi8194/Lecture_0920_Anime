@@ -3,20 +3,19 @@
 	padding: 0;
 	box-sizing: border-box;
 }
-body {
-	height: 5000px;
-}
-#wrap {
+
+section {
 	width: 1000px;
-	height: 600px;
-	border: 1px solid #c92b99;
+	height: 800px;
+	border: 1px solid black;
 	position: relative;
 }
-#box {
+
+article {
 	width: 100px;
 	height: 100px;
-	background-color: gray;
+	background-color: aqua;
 	position: absolute;
-	top: 20px;
-	left: 100px;
+	top: 0px;
+	left: 0px;
 }
