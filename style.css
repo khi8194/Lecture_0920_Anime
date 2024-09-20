@@ -1,25 +1,26 @@
 * {
-	margin: 0px;
-	padding: 0px;
+	margin: 0;
+	padding: 0;
 	box-sizing: border-box;
 }
-h1 {
-	font: bold 50px/1 "arial";
-	color: #000;
+body {
+	height: 500vh;
+	background-image: linear-gradient(
+		to bottom,
+		red,
+		hotpink,
+		lightgreen,
+		green,
+		aqua,
+		blue
+	);
 }
-section {
-	/* width: 1000px; */
-	width: 1400px;
-	height: 800px;
-	/* border: 1px solid black; */
-	border: 1px solid #04b568;
-	position: relative;
+nav {
+	position: fixed;
+	top: 0;
+	left: 0;
 }
-
-article {
-	width: 200px;
-	height: 200px;
-	background-color: aqua;
-	position: absolute;
-	top: 0px;
+nav button {
+	padding: 5px 10px;
+	cursor: pointer;
 }
