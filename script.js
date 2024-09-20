@@ -23,10 +23,17 @@ btns.forEach((btn, idx) => {
 	btn.addEventListener("click", (event) => {
 		//각 반복도는 btn요소 클릭시 자동으로 전달되는 event라는 객체 정보값 확인
 		//각 반복도는 btn요소 클릭시 자동으로 전달되는 event.target
-		//클릭이라는 이벤트가 발생한 바로 그 DOM요소 지침
-		console.log(event.target);
+		//클릭이라는 이벤트가 발생한 바로 그 DOM요소 지칭(event.target)
+		// console.log(event.target);
 		//이벤트가 발생한 해당 DOM요소에 지정된 data-pos라는 정보값 가져옴
-		console.log(event.target.getAttribute("data-pos"));
+		// console.log(event.target.getAttribute("data-pos"));
+
+		const targetPos = event.target.getAttribute("data-pos");
+		console.log(targetPos); //'1000' 숫자처럼 보이는 문자값
+		const convertedTargetPos = parseInt(targetPos); // '1000' -> 1000으로 변환
+		console.log(convertedTargetPos);
+
+		new Anime(window, { scroll: convertedTargetPos });
 	});
 	// console.log(btn);
 	// console.log(idx);
@@ -37,7 +44,7 @@ btns.forEach((btn, idx) => {
 
 // btns.forEach((btn) => {
 // 	btn.addEventListener("click", (event) => {
-// 		// event 객체 안쪽의 target property에는 이벤트가 발생한 대상ㅇ (DOM)정보가 담겨 있음
+// 		// event 객체 안쪽의 target property에는 이벤트가 발생한 대상의 (DOM)정보가 담겨 있음
 // 		// console.log(event);
 // 		// console.log(event.target);
 // 		console.dir(event.target.dataset.pos);
