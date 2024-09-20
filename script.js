@@ -10,6 +10,7 @@ btns.forEach((btn) => {
 
 		//parseInt(문자화된 숫자값) : 정수로 반환
 		//parseFloat(문자화된 숫자값) : 실수로 반환 (소숫점 아래까지 포함된 숫자)
+		//
 		new Anime(window, { scroll: parseInt(event.target.dataset.pos) });
 	});
 });
