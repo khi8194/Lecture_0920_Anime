@@ -1,6 +1,6 @@
 * {
-	margin: 0;
-	padding: 0;
+	margin: 0px;
+	padding: 0px;
 	box-sizing: border-box;
 }
 h1 {
@@ -10,6 +10,8 @@ h1 {
 section {
 	width: 1000px;
 	height: 800px;
+	border: 1px solid black;
+	position: relative;
 }
 
 article {
